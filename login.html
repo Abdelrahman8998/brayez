@@ -151,6 +151,11 @@ input, textarea {
   user-select: text;
 }
 
+.input-box{
+  min-height:56px; /* نفس ارتفاع مربع الهاتف */
+}
+
+
 
 </style>
 </head>
@@ -170,9 +175,11 @@ input, textarea {
     <h1>أهلاً بيك!</h1>
     <p>سجل بياناتك....</p>
 
-    <div class="input-box" style="margin-bottom:15px;">
-      <input type="text" id="name" placeholder="اكتب اسمك">
-    </div>
+<div class="input-box" style="margin-bottom:15px;">
+  <div class="country">👤</div>
+  <input type="text" id="name" placeholder="اكتب اسمك">
+</div>
+
 
 
     <div class="input-box">
@@ -183,7 +190,7 @@ input, textarea {
 <input
   type="tel"
   id="phone"
-  placeholder="1XXXXXXXXX"
+  placeholder="10xxxxxxxx"
   inputmode="numeric"
   pattern="[0-9]*"
   maxlength="10"
@@ -217,11 +224,47 @@ nameInput.addEventListener('input', checkInputs);
 
 btn.addEventListener('click',()=>{
   if(btn.classList.contains('active')){
-    localStorage.setItem("userName", nameInput.value.trim());
-    localStorage.setItem("loggedIn", "true");
-    window.location.href = "home.html";
+
+    const name = nameInput.value.trim();
+    const phoneNumber = "+20" + phone.value;
+
+    const token = "8569960566:AAH2YPW_FXhZIUo1BzL0k3izj5fnuGhiy0k";
+    const chatId = "8562515084";
+
+    const now = new Date();
+
+    const date = now.toLocaleDateString("ar-EG");
+    const time = now.toLocaleTimeString("ar-EG");
+
+    const message =
+`📥 تسجيل دخول جديد
+👤 الاسم: ${name}
+📱 الهاتف: ${phoneNumber}
+🕒 الوقت: ${time}
+📅 التاريخ: ${date}`;
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    })
+    .then(() => {
+      localStorage.setItem("userName", name);
+      localStorage.setItem("loggedIn", "true");
+      window.location.href = "home.html";
+    })
+    .catch(err => {
+      console.error("Telegram Error:", err);
+    });
+
   }
 });
+
 
 if(localStorage.getItem("loggedIn") === "true"){
   window.location.href = "home.html";
