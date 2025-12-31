@@ -264,9 +264,10 @@ body{
        عدد المشتركين <strong>248</strong>👥
     </div>
 
-    <button class="join-btn" onclick="location.href='contests.html'">
-      اشترك الآن
-    </button>
+<button class="join-btn" onclick="joinTelegram()">
+  اشترك الآن
+</button>
+
 
   </div>
 
@@ -348,6 +349,35 @@ setInterval(() => {
     Math.floor((diff / 1000) % 60);
 
 }, 1000);
+
+function joinTelegram(){
+
+  const userName = localStorage.getItem("userName") || "غير مسجل";
+
+  const message = `
+🎉 *طلب اشتراك في مسابقة برايز*
+
+👤 الاسم: ${userName}
+📞 رقم الهاتف: 
+🏙️ المحافظة: 
+📍 العنوان: 
+
+🏆 المسابقة:
+Samsung Galaxy S25 Ultra AI
+
+✍️ برجاء كتابة البيانات كاملة لإتمام الاشتراك
+`;
+
+  const telegramUsername = "CHATbarayez";
+
+  const telegramURL =
+    "https://t.me/" +
+    telegramUsername +
+    "?text=" +
+    encodeURIComponent(message);
+
+  window.open(telegramURL, "_blank");
+}
 </script>
 
 <!-- Logout Modal -->
