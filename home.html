@@ -272,6 +272,11 @@ body{
   color:#333;
 }
 
+.join-btn.disabled{
+  background:#bbb;
+  cursor:not-allowed;
+  box-shadow:none;
+}
 
 
 </style>
@@ -322,7 +327,7 @@ body{
   مبلغ الاشتراك <strong>49 جنيه</strong>
 </div>
 
-<button class="join-btn" onclick="joinTelegram()">
+<button class="join-btn" id="joinBtn" onclick="joinTelegram()">
   اشترك الآن
 </button>
 
@@ -401,12 +406,29 @@ function logout(){
 }
 
 const endDate = new Date("2026-01-01T23:59:59").getTime();
+const joinBtn = document.getElementById("joinBtn");
 
-setInterval(() => {
+const timerInterval = setInterval(() => {
   const now = new Date().getTime();
   let diff = endDate - now;
 
-  if (diff < 0) diff = 0;
+  if (diff <= 0) {
+    diff = 0;
+
+    // تصفير العداد
+    document.getElementById("days").innerText = 0;
+    document.getElementById("hours").innerText = 0;
+    document.getElementById("minutes").innerText = 0;
+    document.getElementById("seconds").innerText = 0;
+
+    // تعطيل زر الاشتراك
+    joinBtn.disabled = true;
+    joinBtn.classList.add("disabled");
+    joinBtn.innerText = "انتهت المسابقة";
+
+    clearInterval(timerInterval);
+    return;
+  }
 
   document.getElementById("days").innerText =
     Math.floor(diff / (1000 * 60 * 60 * 24));
