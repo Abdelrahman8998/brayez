@@ -163,7 +163,7 @@ body{
 }
 
 .contest-card img{
-  width:100%;
+  width:85%;
   border-radius:18px;
   margin-bottom:15px;
 }
@@ -224,6 +224,7 @@ body{
   font-weight:700;
   cursor:pointer;
   margin-top:12px;
+  margin-bottom:15px;  /* أضف هذا السطر */
 }
 
 .steps{
@@ -231,6 +232,7 @@ body{
   border-radius:16px;
   padding:14px;
   margin-top:10px;
+  margin-bottom:15px;  /* أضف هذا */
   font-size:13px;
   color:#555;
   display:none;
@@ -306,10 +308,10 @@ body{
 <div class="content">
 
   <div class="contest-card" id="current-contest">
-    <img src="https://m.media-amazon.com/images/I/61NUR7kNpZL._AC_SY300_SX300_QL70_ML2_.jpg" alt="جائزة">
+    <img src="https://m.media-amazon.com/images/I/615szeYqyUL._AC_SX296_SY426_FMwebp_QL65_.jpg" alt="جائزة">
 
     <div class="contest-title">
-      مسابقة Samsung Galaxy S25 Ultra AI
+      مسابقة iPhone 17 Pro Max
     </div>
 
     <div class="timer">
@@ -320,16 +322,12 @@ body{
     </div>
 
     <div class="participants">
-       عدد المشتركين <strong>308</strong>👥
+       عدد المشتركين <strong>11</strong>👥
     </div>
 
     <div class="price">
-  مبلغ الاشتراك <strong>49 جنيه</strong>
+  مبلغ الاشتراك <strong>20 جنيه</strong>
 </div>
-
-<button class="join-btn" id="joinBtn" onclick="joinTelegram()">
-  اشترك الآن
-</button>
 
 <div class="how-to-join" onclick="toggleSteps()">
   تعرف على كيفية الاشتراك ⌄
@@ -345,6 +343,10 @@ body{
     <li>بعد التحويل هيتم تأكيد اشتراكك</li>
   </ol>
 </div>
+
+<button class="join-btn" id="joinBtn" onclick="joinTelegram()">
+  اشترك الآن
+</button>
 
   </div>
 
@@ -405,7 +407,7 @@ function logout(){
   window.location.href = "login.html";
 }
 
-const endDate = new Date("2026-01-01T23:59:59").getTime();
+const endDate = new Date("2026-01-02T23:59:59").getTime();
 const joinBtn = document.getElementById("joinBtn");
 
 const timerInterval = setInterval(() => {
@@ -449,7 +451,7 @@ function joinTelegram(){
   const userName = localStorage.getItem("userName") || "غير مسجل";
 
   const message = `
-🏆 *Samsung Galaxy S25 Ultra AI طلب اشتراك في مسابقة*
+🏆 *iPhone 17 Pro Max طلب اشتراك في مسابقة*
 
 👤 الاسم: ${userName}
 📞 رقم الهاتف: 
