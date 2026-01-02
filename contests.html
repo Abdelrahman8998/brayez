@@ -157,6 +157,28 @@ body{
   -ms-user-select: none;     /* IE/Edge */
   user-select: none;
 }
+/* ---------------------------------------- مسابقة منتهية ------------------------------*/
+.card.ended{
+  opacity:.85;
+  background:#fafafa;
+}
+
+.ended-badge{
+  background:#e8ffe8;
+  color:#1e8e3e;
+}
+
+.winner{
+  margin-top:6px;
+  font-size:12px;
+  font-weight:700;
+  color:#444;
+}
+
+.winner span{
+  color:#6f4bd8;
+}
+
 
 
 </style>
@@ -193,6 +215,25 @@ body{
     </div>
     <button class="btn" disabled style="opacity:.6">قريباً</button>
   </div>
+
+  <!---------------------------------- مسابقة منتهية -------------------------------------------------->
+<div class="card ended">
+  <div class="card-info">
+    <h3>مسابقة iPhone 17 📱</h3>
+    <p>تم السحب بنجاح</p>
+    <span class="badge ended-badge">✅ انتهت</span>
+
+    <div class="winner">
+      🏆 الفائز: <span>وائل محمود</span><br>
+      📍 العنوان: <span>بني سويف - مركز ناصر - الدوالطة</span>
+    </div>
+  </div>
+
+  <button class="btn" disabled style="opacity:.6">
+    منتهية
+  </button>
+</div>
+
 
 </div>
 
