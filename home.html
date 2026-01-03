@@ -336,15 +336,13 @@ body{
 <div class="steps" id="stepsBox">
   <ol>
     <li>اضغط على زر <strong>اشترك الآن</strong></li>
-    <li>هتتحول تلقائيًا على تليجرام</li>
-    <li>كمّل البيانات الناقصة في الرسالة الجاهزة</li>
-    <li>استنى لحد ما حد من الدعم يرد عليك</li>
-    <li>هيقولك تحوّل المبلغ على الرقم اللي هيبعتهولك</li>
-    <li>بعد التحويل هيتم تأكيد اشتراكك</li>
+    <li>سيتم توجيهك مباشرة إلى صفحة الدفع</li>
+    <li>أكمل البيانات المطلوبة لتأكيد الاشتراك</li>
+    <li>اضغط تأكيد الدفع لإتمام العملية</li>
   </ol>
 </div>
 
-<button class="join-btn" id="joinBtn" onclick="joinTelegram()">
+<button class="join-btn" id="joinBtn" onclick="window.location.href='payment.html'">
   اشترك الآن
 </button>
 
@@ -445,30 +443,6 @@ const timerInterval = setInterval(() => {
     Math.floor((diff / 1000) % 60);
 
 }, 1000);
-
-function joinTelegram(){
-
-  const userName = localStorage.getItem("userName") || "غير مسجل";
-
-  const message = `
-🏆عايز اشترك في مسابقة 30,000$ على محفظتك
-
-👤 الاسم: ${userName}
-📞 رقم الهاتف: 
-📍 العنوان: 
-`;
-
-
-  const telegramUsername = "CHATbarayez";
-
-  const telegramURL =
-    "https://t.me/" +
-    telegramUsername +
-    "?text=" +
-    encodeURIComponent(message);
-
-  window.open(telegramURL, "_blank");
-}
 
 function toggleSteps(){
   const box = document.getElementById("stepsBox");
